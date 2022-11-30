@@ -203,12 +203,17 @@ function HeatMap() {
          .style('opacity', 0);
    }
 
-   req.open('GET', url, true);                     // initialize request for data
-   req.send();                                     // send request for data
-   req.onload = function() {
-      dataJSON = JSON.parse(req.responseText);     // parse returned data
-      dataset = dataJSON.monthlyVariance;          // select relevant JSON data part & assign to a variable
-      // console.log(dataset)
+   let getDataClickHandler = () => {
+      req.open('GET', url, true);                     // initialize request for data
+      req.send();                                     // send request for data
+      req.onload = function() {
+         dataJSON = JSON.parse(req.responseText);     // parse returned data
+         dataset = dataJSON.monthlyVariance;          // select relevant JSON data part & assign to a variable
+         //console.log(dataset)
+      }
+   }
+   
+   let generateMapClickHandler = () => {
       drawCanvas();
       generateMapTitle('200', '30');
       generateMapDescribtion('200', '50')
@@ -218,12 +223,12 @@ function HeatMap() {
       generateAxesCaption();
       generateLegend()
       generateTooltip()
-   };
+   }
 
    return (
       <div>
-         <button>Get Data</button>
-         <button>Generate Map</button>
+         <button onClick={getDataClickHandler}>Get Data</button>
+         <button onClick={generateMapClickHandler}>Generate Map</button>
       </div>
    )
 
